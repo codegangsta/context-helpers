@@ -30,7 +30,13 @@ func run(args []string, _ io.Reader, out io.Writer) error {
 		Name:        name,
 		PackageName: packageName,
 	}
-	return helper.Render(out)
+	f, err := os.Create(helper.FileName())
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	return helper.Render(f)
 }
 
 func getPackageName() (string, error) {
