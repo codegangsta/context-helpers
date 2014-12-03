@@ -1,12 +1,28 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"go/build"
 	"io"
 	"os"
+
+	"github.com/docopt/docopt-go"
 )
+
+var usage = `
+context-helpers
+
+generate getter/setter functions for accessing a value via gorilla/context.
+
+Usage:
+	context-helpers <type>
+	context-helpers -h | --help
+	context-helpers --version
+
+Options:
+	-h --help     Show this screen.
+	-v --version  Show version.
+`
 
 func main() {
 	if err := run(os.Args, os.Stdin, os.Stdout); err != nil {
@@ -16,11 +32,12 @@ func main() {
 }
 
 func run(args []string, _ io.Reader, out io.Writer) error {
-	if len(args) < 2 {
-		return errors.New("Wrong number of arguments")
+	options, err := docopt.Parse(usage, args[1:], true, "0.0.1", false)
+	if err != nil {
+		return err
 	}
 
-	name := args[1]
+	name := options["<type>"].(string)
 	packageName, err := getPackageName()
 	if err != nil {
 		return err
