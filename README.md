@@ -25,7 +25,7 @@ context-helpers Session
 
 And it will generate a `session_helper.go` file with the following content:
 
-```
+``` go
 package main
 
 import (
