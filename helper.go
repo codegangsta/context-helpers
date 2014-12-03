@@ -62,7 +62,7 @@ func (h Helper) KeyName() string {
 }
 
 func (h Helper) Type() string {
-	return h.Name
+	return "*" + h.Name
 }
 
 func (h Helper) FileName() string {
