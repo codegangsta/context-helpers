@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"go/build"
 	"io"
@@ -15,12 +16,21 @@ func main() {
 }
 
 func run(args []string, _ io.Reader, out io.Writer) error {
-	name, err := getPackageName()
+	if len(args) < 2 {
+		return errors.New("Wrong number of arguments")
+	}
+
+	name := args[1]
+	packageName, err := getPackageName()
 	if err != nil {
 		return err
 	}
-	fmt.Println(name)
-	return nil
+
+	helper := Helper{
+		Name:        name,
+		PackageName: packageName,
+	}
+	return helper.Render(out)
 }
 
 func getPackageName() (string, error) {
