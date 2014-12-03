@@ -6,8 +6,7 @@ import (
 	"text/template"
 )
 
-var helperTmpl = `
-package {{ .PackageName }}
+var helperTmpl = `package {{ .PackageName }}
 
 import (
 	"net/http"
@@ -28,8 +27,7 @@ func Get{{ .TitleName }}(r *http.Request) {{ .Type }} {
 
 func Set{{ .TitleName }}(r *http.Request, val {{ .Type }}) {
 	context.Set(r, {{ .KeyName }}, val)
-}
-`
+}`
 
 type Helper struct {
 	Name        string
